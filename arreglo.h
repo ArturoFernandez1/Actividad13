@@ -25,7 +25,17 @@ public:
     void eliminar(size_t p);
     void mostrar();
     T operator[](size_t p);
+    T *buscar(const T &e);
     size_t size();
+    Arreglo<T *> buscar_todos(const T &e);
+    friend Arreglo<T> &operator<<(Arreglo<T> &a, const T &e)
+    {
+        {
+            a.insertarFinal(e);
+
+            return a;
+        }
+    }
 };
 
 template <class T>
@@ -139,6 +149,36 @@ void Arreglo<T>::eliminar(size_t p)
     }
 
     this->cont--;
+}
+
+template <class T>
+T *Arreglo<T>::buscar(const T &e)
+{
+    for (size_t i = 0; i < cont; i++)
+    {
+        if (e == arreglo[i])
+        {
+            return &arreglo[i];
+        }
+    }
+
+    return nullptr;
+}
+
+template <class T>
+Arreglo<T *> Arreglo<T>::buscar_todos(const T &e)
+{
+    Arreglo<T *> ptrs;
+
+    for (size_t i = 0; i < cont; i++)
+    {
+        if (e == arreglo[i])
+        {
+            ptrs.insertarFinal(&arreglo[i]);
+        }
+    }
+
+    return ptrs;
 }
 
 template <class T>
